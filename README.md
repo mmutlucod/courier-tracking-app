@@ -43,7 +43,6 @@ This is a **two-sided marketplace** for delivery tracking:
 
 ## 📸 Screenshots
 
-### Customer Side
 <table>
   <tr>
   <td><img src="frontend/assets/screenshots/customer-tracking.jpeg" width="250"/><br/><b>Customer – Live Courier Tracking</b></td>
