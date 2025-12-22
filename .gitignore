@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# env
+.env
+.env.*
+frontend/.env
+backend/.env
+frontend/.env.*
+backend/.env.*
+
+# expo
+.expo/
+web-build/
+dist/
+
+# native
+android/
+ios/
+
+# logs
+*.log
