@@ -23,14 +23,14 @@ Real-time GPS-based delivery tracking system with React Native & Node.js
 
 ## 📸 Screenshots
 
-![Customer Live Tracking](frontend/frontend/assets/screenshots/customer-tracking.jpeg)
-![Courier Delivery Tracking](assets/screenshots/courier-tracking.jpeg)
+![Customer Live Tracking](frontend//assets/screenshots/customer-tracking.jpeg)
+![Courier Delivery Tracking](frontend/assets/screenshots/courier-tracking.jpeg)
 
 ## 🚀 Installation
 
 **1. Clone & Install**
 ```bash
-git clone https://github.com/yourusername/courier-tracking-system.git
+git clone https://github.com/mmutlucod/courier-tracking-system.git
 cd courier-tracking-system
 
 # Backend
