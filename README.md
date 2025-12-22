@@ -46,8 +46,8 @@ This is a **two-sided marketplace** for delivery tracking:
 ### Customer Side
 <table>
   <tr>
-    <td><img src="assets/screenshots/customer-dashboard.png" width="250"/><br/><b>Dashboard</b></td>
-    <td><img src="assets/screenshots/customer-tracking.png" width="250"/><br/><b>Live Tracking</b></td>
+    <td><img src="frontend/assets/screenshots/customer-dashboard.png" width="250"/><br/><b>Dashboard</b></td>
+    <td><img src="frontend/assets/screenshots/customer-tracking.png" width="250"/><br/><b>Live Tracking</b></td>
   </tr>
 </table>
 
