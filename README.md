@@ -23,7 +23,7 @@ Real-time GPS-based delivery tracking system with React Native & Node.js
 
 ## 📸 Screenshots
 
-![Customer Live Tracking](assets/screenshots/customer-tracking.jpeg)
+![Customer Live Tracking](frontend/frontend/assets/screenshots/customer-tracking.jpeg)
 ![Courier Delivery Tracking](assets/screenshots/courier-tracking.jpeg)
 
 ## 🚀 Installation
