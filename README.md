@@ -1,105 +1,228 @@
 # 🚴 Courier Tracking System
+
 Real-time GPS-based delivery tracking system with React Native & Node.js
 
-## 🎯 Features
+## 🎯 What It Does
 
-**Customer Side**
-- Multiple address input (GPS / Manual / Saved)
-- Real-time courier tracking on map
-- Live route & ETA calculation
-- Rate courier after delivery
+This is a **two-sided marketplace** for delivery tracking:
 
-**Courier Side**
-- Accept/reject orders
-- Auto GPS sharing (every 5s)
-- Complete deliveries
-- View earnings & stats
+**Customer Side:**
+- Create orders with 3 address modes:
+  - **Saved Address**: Choose from saved locations
+  - **GPS Location**: Auto-detect current position with reverse geocoding
+  - **Manual Input**: Type address, convert to coordinates via Google Geocoding API
+- Track courier in real-time on map
+- See live route polyline and ETA calculation
+- Rate courier after delivery (1-5 stars + comment)
+- Manage unlimited saved addresses
+
+**Courier Side:**
+- Toggle availability (online/offline)
+- View and accept pending orders
+- Auto GPS tracking (sends location every 5 seconds)
+- Complete deliveries with one tap
+- View total earnings and delivery stats
+- See delivery history with ratings
+
+## 🔄 How It Works
+
+1. **Customer creates order** → Status: `pending`
+2. **Available couriers see it** in their order list
+3. **Courier accepts** → Status: `in_transit` + GPS tracking starts
+4. **Customer sees live tracking** with map route and ETA
+5. **Courier completes delivery** → Status: `delivered`
+6. **Customer rates courier** → Courier's rating updates
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React Native, Expo Router, TypeScript, Zustand, Socket.IO Client, React Native Maps  
-**Backend:** Node.js, Express, Socket.IO, MongoDB, Redis, JWT
+| Layer | Technologies |
+|-------|-------------|
+| **Frontend** | React Native, Expo Router v4, TypeScript, Zustand, Socket.IO Client, React Native Maps, Expo Location |
+| **Backend** | Node.js, Express, Socket.IO, MongoDB, Redis, JWT, Bcrypt |
+| **APIs** | Google Maps (Directions, Geocoding), Google Places |
 
 ## 📸 Screenshots
 
-<p align="center">
-  <img src="frontend/assets/screenshots/customer-tracking.jpeg" alt="Customer Live Tracking" width="300"/>
-  <img src="frontend/assets/screenshots/courier-tracking.jpeg" alt="Courier Delivery Tracking" width="300"/>
-</p>
+### Customer Side
+<table>
+  <tr>
+    <td><img src="assets/screenshots/customer-dashboard.png" width="250"/><br/><b>Dashboard</b></td>
+    <td><img src="assets/screenshots/customer-tracking.png" width="250"/><br/><b>Live Tracking</b></td>
+  </tr>
+</table>
 
 ## 🚀 Installation
 
-**1. Clone & Install**
-```bash
-git clone https://github.com/mmutlucod/courier-tracking-system.git
-cd courier-tracking-system
+### Prerequisites
+- Node.js v18+
+- MongoDB v5+
+- Redis v6+
+- Expo CLI
+- Android Studio / Xcode (optional)
 
-# Backend
+### 1. Clone Repository
+```bash
+git clone https://github.com/yourusername/courier-tracking-system.git
+cd courier-tracking-system
+```
+
+### 2. Backend Setup
+```bash
 cd backend
 npm install
 
-# Frontend
-cd ../frontend
-npm install
-```
+# Create .env file
+cp .env.example .env
 
-**2. Environment Variables**
+# Edit .env with your values:
+# PORT=3000
+# MONGODB_URI=mongodb://localhost:27017/courier-tracking
+# REDIS_HOST=localhost
+# REDIS_PORT=6379
+# JWT_SECRET=your-super-secret-key-change-this
+# ALLOWED_ORIGINS=http://localhost:19000,http://localhost:8081
 
-Backend `.env`:
-```env
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/courier-tracking
-REDIS_HOST=localhost
-REDIS_PORT=6379
-JWT_SECRET=your_secret
-GOOGLE_MAPS_API_KEY=your_key
-```
-
-Frontend `.env`:
-```env
-EXPO_PUBLIC_API_URL=http://192.168.1.XXX:3000
-EXPO_PUBLIC_SOCKET_URL=http://192.168.1.XXX:3000
-EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=your_key
-```
-
-**3. Start Services**
-```bash
 # Start MongoDB
 mongod
 
 # Start Redis
 redis-server
 
-# Start Backend
-cd backend
+# Run backend
 npm run dev
+```
 
-# Start Frontend
+### 3. Frontend Setup
+```bash
 cd frontend
+npm install
+
+# Update API URLs in src/utils/constants.ts:
+# Replace 'localhost' with your local IP (e.g., 192.168.1.100)
+# BASE_URL: 'http://192.168.1.100:3000'
+# SOCKET_URL: 'http://192.168.1.100:3000'
+
+# Add Google Maps API Key to app.json:
+# "android": {
+#   "config": {
+#     "googleMaps": {
+#       "apiKey": "YOUR_API_KEY_HERE"
+#     }
+#   }
+# }
+
+# Start Expo
 npx expo start
 ```
 
-## 🔑 Important
-
-- Get Google Maps API key from [Google Cloud Console](https://console.cloud.google.com/)
-- Use your local IP instead of `localhost` (e.g. `192.168.1.100:3000`)
-- MongoDB and Redis must be running
-
-## 🏗️ Architecture
+### 4. Test It
+Use these test accounts:
 ```
-Courier → Socket.IO → Redis (cache) → MongoDB (batch every 10s)
+Customer: customer@test.com / 123456
+Courier:  courier@test.com / 123456
+```
+
+## 🔑 Important Configuration
+
+### Google Maps API Key
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Enable these APIs:
+   - Maps SDK for Android
+   - Maps SDK for iOS
+   - Directions API
+   - Geocoding API
+3. Create API key and add to `app.json`
+
+### Local IP Address
+**Don't use `localhost`** - use your computer's local IP:
+```bash
+# Find your IP:
+# Mac/Linux: ifconfig | grep "inet "
+# Windows: ipconfig | findstr IPv4
+
+# Then update constants.ts:
+BASE_URL: 'http://192.168.1.XXX:3000'
+```
+
+### Permissions
+**Android:** Add to `AndroidManifest.xml`:
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+
+**iOS:** Add to `Info.plist`:
+```xml
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location to show delivery address</string>
+```
+
+## 🏗️ Architecture Decisions
+
+### Why Socket.IO + Redis + MongoDB?
+```
+Courier → Socket.IO → Redis (real-time cache) → MongoDB (batch write every 10s)
               ↓
-         Customer (real-time)
+         Customer App (live updates)
 ```
 
-- **Redis:** < 1ms location cache
-- **MongoDB:** GeoJSON + 2dsphere index
-- **Socket.IO:** Real-time bidirectional updates
+- **Socket.IO**: Real-time with auto-reconnection, polling fallback
+- **Redis**: Sub-millisecond reads for courier locations (GeoSpatial queries)
+- **MongoDB**: GeoJSON support with 2dsphere index for location history
+- **Batch Write**: Prevent DB overload (10 couriers × 5s interval = 120 writes/min → batched to 6 writes/min)
+
+### Why Separate Address Collection?
+Instead of storing address in User model:
+- Unlimited addresses per customer
+- Order history preserved even if address is deleted
+- Default address selection
+- Better data modeling
+
+## 🐛 Troubleshooting
+
+**Can't connect to backend:**
+- Check if MongoDB and Redis are running
+- Use local IP instead of `localhost`
+- Check firewall settings
+
+**Map not showing:**
+- Verify Google Maps API key in `app.json`
+- Check if Maps SDK is enabled in Google Cloud Console
+- Clear Expo cache: `npx expo start -c`
+
+**GPS not working:**
+- Check location permissions in phone settings
+- For Android 12+, enable "Precise location"
+- iOS requires "Allow While Using App"
+
+**Socket disconnects:**
+- Check network stability
+- Verify CORS settings in backend
+- Socket.IO has auto-reconnection (check console logs)
+
+## 📦 Deployment
+
+### Backend (Railway / Render)
+```bash
+# Set environment variables:
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/dbname
+REDIS_HOST=redis-xxxxx.cloud.redislabs.com
+REDIS_PORT=12345
+REDIS_PASSWORD=your-password
+JWT_SECRET=production-secret-key
+ALLOWED_ORIGINS=https://yourapp.com
+```
 
 ## 📝 License
 
-MIT
+MIT License - feel free to use this project for learning or commercial purposes.
+
+## 🙏 Credits
+
+- [Expo](https://expo.dev) - React Native framework
+- [Socket.IO](https://socket.io) - Real-time engine
+- [Google Maps Platform](https://developers.google.com/maps) - Maps & routing
 
 ---
 
-Built with ❤️ by Mustafa
+Built with  by Mustafa(https://github.com/mmutl)
