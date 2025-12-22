@@ -1,5 +1,4 @@
 # 🚴 Courier Tracking System
-
 Real-time GPS-based delivery tracking system with React Native & Node.js
 
 ## 🎯 Features
@@ -23,8 +22,10 @@ Real-time GPS-based delivery tracking system with React Native & Node.js
 
 ## 📸 Screenshots
 
-![Customer Live Tracking](frontend//assets/screenshots/customer-tracking.jpeg)
-![Courier Delivery Tracking](frontend/assets/screenshots/courier-tracking.jpeg)
+<p align="center">
+  <img src="frontend/assets/screenshots/customer-tracking.jpeg" alt="Customer Live Tracking" width="300"/>
+  <img src="frontend/assets/screenshots/courier-tracking.jpeg" alt="Courier Delivery Tracking" width="300"/>
+</p>
 
 ## 🚀 Installation
 
@@ -101,4 +102,4 @@ MIT
 
 ---
 
-Built with by Mustafa
+Built with ❤️ by Mustafa
