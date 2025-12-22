@@ -16,7 +16,7 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Bu uygulama arka planda konum bilginizi kurye takibi için kullanır."
       },
       "config": {
-        "googleMapsApiKey": "AIzaSyBDZqisr6gNtAj6UJKecns3oB6TLODSEuI"
+        "googleMapsApiKey": ""
       }
     },
     "android": {
@@ -34,7 +34,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBDZqisr6gNtAj6UJKecns3oB6TLODSEuI"
+          "apiKey": ""
         }
       },
       "edgeToEdgeEnabled": true,
